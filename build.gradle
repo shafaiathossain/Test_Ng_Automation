@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation("org.seleniumhq.selenium:selenium-java:4.34.0")
+    // https://mvnrepository.com/artifact/org.testng/testng
+    testImplementation("org.testng:testng:7.11.0")
+    testCompileOnly("org.projectlombok:lombok:1.18.38")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.38")
+    // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+    testImplementation("io.rest-assured:rest-assured:5.5.5")
+    // https://mvnrepository.com/artifact/commons-configuration/commons-configuration
+    implementation("commons-configuration:commons-configuration:1.10")
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
+    implementation("com.github.javafaker:javafaker:1.0.2")
+    implementation("org.apache.commons:commons-csv:1.14.0")
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")
+    implementation("io.qameta.allure:allure-testng:2.29.1")
+
+}
+
+test {
+    useTestNG(){
+        if (project.hasProperty("email") && project.hasProperty("password")){
+            systemProperties.put("email",project.property("email"))
+            systemProperties.put("password",project.property("password"))
+
+            print(project.property("email"))
+            print(project.property("password"))
+        }
+        suites "./src/test/resources/suite.xml"
+
+    }
+}
